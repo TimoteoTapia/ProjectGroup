@@ -10,10 +10,10 @@ import {
 } from '@/app/ui/skeletons';
 import CardWrapper from '@/app/ui/dashboard/cards';
 import { Button } from '@/app/ui/button';
-import { fetchCategories, fetchFilteredInvoices } from '@/app/lib/data';
+import { fetchProducts } from '@/app/lib/data';
 
 export default async function Page() {
-  const categories = await fetchCategories();
+  const products = await fetchProducts();
   return (
     <main>
       <h1 className={`${lusitana.className} mb-4 text-xl md:text-2xl`}>
@@ -39,25 +39,26 @@ export default async function Page() {
         </div>
       </div>
       <div className="mt-4 flex flex-col gap-4 md:flex-row">
-        {categories.map((category) => {
+        {products.map((product) => {
           return (
             <div
-              id={category.id}
+              id={product.id}
               className="flex flex-col justify-center justify-items-center gap-4"
             >
               <div className="flex-auto">
                 <img
-                  src={`${category.image}`}
+                  src={`${product.image}`}
                   alt="Hero"
                   className="rounded-lg"
                 />
               </div>
               <div className="flex flex-col justify-center justify-items-center gap-4">
                 <h2 className="mb-4 text-lg md:text-xl">
-                  {category.name.charAt(0).toUpperCase() +
-                    category.name.slice(1)}
+                  {product.name.charAt(0).toUpperCase() +
+                    product.name.slice(1)}
                 </h2>
-                <p className="mb-2">{category.description}</p>
+                <p className="mb-2">{product.description}</p>
+                <p className="mb-2">{product.price}</p>
                 <Button className="max-w-max">See Products</Button>
               </div>
             </div>
