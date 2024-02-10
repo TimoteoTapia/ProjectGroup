@@ -56,7 +56,7 @@ export default function ProductsPage() {
               <Link href={`/products/${product.id}`}>
                 <h2 className="font-bold">{product.name}</h2>
                 <p>{product.description}</p>
-                <p>${product.price}</p>
+                <p>Price: ${product.price}</p>
                 <Image
                   src={product.image || 'https://via.placeholder.com/200'}
                   alt={product.name}
