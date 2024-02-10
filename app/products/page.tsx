@@ -20,8 +20,8 @@ export default function ProductsPage() {
   useEffect(() => {
     const obtainProducts = async () => {
       try {
-        const productosData: Product[] = await fetchProducts();
-        setProducts(productosData);
+        const productsData: Product[] = await fetchProducts();
+        setProducts(productsData);
       } catch (error: any) {
         console.error("Error to fetch the products", error.message);
       }
@@ -34,7 +34,7 @@ export default function ProductsPage() {
     setFilterName(event.target.value);
   };
 
-  const productosFiltrados = products.filter((product) =>
+  const productFilter = products.filter((product) =>
     product.name.toLowerCase().includes(filterName.toLowerCase())
   );
   return (
@@ -50,13 +50,13 @@ export default function ProductsPage() {
         onChange={handleFilterChange}
       />
       <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4'>
-        {productosFiltrados.map((product) => {
+        {productFilter.map((product) => {
           return (
             <div key={product.id} className='border-4 p-2 m-2'>
               <Link href={`/products/${product.id}`}>
-                <h2>{product.name}</h2>
+                <h2 className="font-bold">{product.name}</h2>
                 <p>{product.description}</p>
-                <p>{product.price}</p>
+                <p>${product.price}</p>
                 <Image
                   src={product.image || 'https://via.placeholder.com/200'}
                   alt={product.name}
