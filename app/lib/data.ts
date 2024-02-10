@@ -430,3 +430,32 @@ export async function fetchReviewsByUserId(id: string) {
     throw new Error('Failed to fetch reviews.');
   }
 }
+
+export async function fetchReviewsByProductId(id: string) {
+  try {
+    const reviews = await prisma.reviewHandcrafted.findMany({
+      where: {
+        productId: id,
+      },
+      include: {
+        user: true // Include the user details associated with each review
+      }
+    });
+    return reviews;
+  } catch (error) {
+    console.error('Failed to fetch reviews:', error);
+    throw new Error('Failed to fetch reviews.');
+  }
+}
+
+
+export async function fetchReviews() {
+  noStore();
+  try {
+    const reviews = await prisma.reviewHandcrafted.findMany();
+    return reviews;
+  } catch (error) {
+    console.error('Failed to fetch reviews:', error);
+    throw new Error('Failed to fetch reviews.');
+  }
+}
