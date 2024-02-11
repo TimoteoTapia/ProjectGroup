@@ -7,9 +7,9 @@ export function DetailsProductsButton({ id }: { id: string }) {
   return (
     <Link
       href={`/dashboard/profile/products/${id}`}
-      className="hover:bg-silverSand-300 rounded-md border p-2"
+      className="rounded-md border border-gray-400 px-4 py-2 font-semibold text-gray-700 transition duration-300 ease-in-out hover:bg-gray-300"
     >
-      View product
+      View Product
     </Link>
   );
 }
@@ -17,18 +17,18 @@ export function DetailsProductsButton({ id }: { id: string }) {
 export function CreateProductButton() {
   return (
     <Link
-      href="/dashboard/profile/products/create" 
+      href="/dashboard/profile/products/create"
+      className="inline-block rounded bg-green-500 px-4 py-2 font-bold text-white transition duration-300 ease-in-out hover:bg-green-600"
     >
       <span className="hidden md:block">Create Product</span>{' '}
     </Link>
   );
 }
-
 export function UpdateProductButton({ id }: { id: string }) {
   return (
     <Link
       href={`/dashboard/profile/products/${id}/edit`}
-      className="hover:bg-silverSand-300 rounded-md border p-2"
+      className="rounded-md border border-gray-400 px-4 py-2 font-semibold text-gray-700 transition duration-300 ease-in-out hover:bg-gray-300"
     >
       Update Product
     </Link>
@@ -40,9 +40,9 @@ export function DeleteProductButton({ id }: { id: string }) {
   return (
     <>
       <form action={deleteItem}>
-        <button className="hover:bg-silverSand-300 rounded-md border p-2">
-          <span className="sr-only">Delete</span>
-          Delete
+        <button className="rounded-md border border-gray-400 px-4 py-2 font-semibold text-gray-700 transition duration-300 ease-in-out hover:bg-gray-300">
+          <span className="sr-only">Delete Product</span>
+          Delete Product
         </button>
       </form>
     </>
