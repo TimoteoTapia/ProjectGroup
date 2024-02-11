@@ -56,16 +56,20 @@ export default function ProductsPage() {
                 <h2 className="font-bold">{product.name}</h2>
                 <p>{product.description}</p>
                 <p>Price: ${product.price}</p>
-                <button>View Details</button>
-                <Image
-                  src={product.image || 'https://via.placeholder.com/200'}
-                  alt={product.name}
-                  width={200}
-                  height={200}
-                />
-              <Link href={`/products/${product.id}`}>
-                <button style={{ marginTop: '1rem', backgroundColor: '#dda15e', color: 'black', padding: '0.25rem 0.75rem', borderRadius: '0.25rem', border: 'none', fontSize: '1rem' }}>View Item</button>
-              </Link>
+                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '200px' }}>
+                  <Image
+                    src={product.image || 'https://via.placeholder.com/200'}
+                    alt={product.name}
+                    width={200}
+                    height={200}
+                    className="hover:scale-105 transition-transform duration-300"
+                  />
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'center' }}>
+                <Link href={`/products/${product.id}`}>
+                  <button style={{ backgroundColor: '#dda15e', color: 'black', padding: '0.25rem 0.75rem', borderRadius: '0.25rem', border: 'none', fontSize: '1rem' }}>View Item</button>
+                </Link>
+              </div>
             </div>
           );
         })}
