@@ -94,3 +94,16 @@ export type InvoiceForm = {
   amount: number;
   status: 'pending' | 'paid';
 };
+
+/* Types for Profile Page */
+
+// Type for edit product profile
+
+export type EditProductType = {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  stock: number;
+};
+

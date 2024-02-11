@@ -8,7 +8,11 @@ export const authConfig = {
     authorized({ auth, request: { nextUrl } }) {
       const isLoggedIn = !!auth?.user;
       const isOnDashboard = nextUrl.pathname.startsWith('/dashboard');
-      if (isOnDashboard) {
+      const publicPages = ['/','/products']
+      if (publicPages.includes(nextUrl.pathname) || nextUrl.pathname.startsWith('/products')) {
+        return true;
+      }
+      else if (isOnDashboard) {
         if (isLoggedIn) return true;
         return false; // Redirect unauthenticated users to login page
       } else if (isLoggedIn) {
