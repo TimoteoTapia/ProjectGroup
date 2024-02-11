@@ -210,7 +210,8 @@ export async function registerUser(prevState: StateUser, formData: FormData) {
       message: 'Missing Fields. Failed to Create User.',
     };
   }
-  const { firstName, lastName, middleName, email, password } = validatedFields.data;
+  const { firstName, lastName, middleName, email, password } =
+    validatedFields.data;
   const role = 'user';
   const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -241,7 +242,6 @@ const ProductSchema = z.object({
   userId: z.string(),
 });
 
-
 export type ProductState = {
   errors?: {
     name?: string[];
@@ -253,9 +253,12 @@ export type ProductState = {
 };
 
 const CreateProduct = ProductSchema.omit({ id: true });
-const UpdateProduct = ProductSchema.omit({ id: true, userId: true});
+const UpdateProduct = ProductSchema.omit({ id: true, userId: true });
 
-export async function CreateProductProfile(prevState: ProductState, formData: FormData) {
+export async function CreateProductProfile(
+  prevState: ProductState,
+  formData: FormData,
+) {
   const validatedFields = CreateProduct.safeParse({
     name: formData.get('name'),
     description: formData.get('description'),
@@ -271,7 +274,7 @@ export async function CreateProductProfile(prevState: ProductState, formData: Fo
     };
   }
 
-  const { name, description, price, stock,userId } = validatedFields.data;
+  const { name, description, price, stock, userId } = validatedFields.data;
 
   const convertPrice = parseFloat(price);
   const convertStock = parseInt(stock);
@@ -282,7 +285,7 @@ export async function CreateProductProfile(prevState: ProductState, formData: Fo
         description: description,
         price: convertPrice,
         stock: convertStock,
-        userId: userId
+        userId: userId,
       },
     });
   } catch (error) {
@@ -291,7 +294,6 @@ export async function CreateProductProfile(prevState: ProductState, formData: Fo
 
   revalidatePath('/dashboard/profile/products');
   redirect('/dashboard/profile/products');
-
 }
 
 export async function UpdateProductProfile(id: string, formData: FormData) {
@@ -301,7 +303,6 @@ export async function UpdateProductProfile(id: string, formData: FormData) {
     price: formData.get('price'),
     stock: formData.get('stock'),
   });
-
 
   if (!validatedFields.success) {
     return {
@@ -330,4 +331,64 @@ export async function UpdateProductProfile(id: string, formData: FormData) {
 
   revalidatePath('/dashboard/profile/products');
   redirect('/dashboard/profile/products');
+}
+
+const reviewSquema = z.object({
+  id: z.string(),
+  title: z.string(),
+  content: z.string(),
+  rating: z.string(),
+  userId: z.string(),
+  productId: z.string(),
+});
+
+const AddReview = reviewSquema.omit({ id: true });
+
+export type ReviewState = {
+  errors?: {
+    title?: string[];
+    content?: string[];
+    rating?: string[];
+    userId?: string[];
+    productId?: string[];
+  };
+  message?: string | null;
+};
+
+export async function CreateReview(prevState: ReviewState, formData: FormData) {
+  const validatedFields = AddReview.safeParse({
+    title: formData.get('title'),
+    content: formData.get('content'),
+    rating: formData.get('rating'),
+    userId: formData.get('userId'),
+    productId: formData.get('productId'),
+  });
+
+  console.log(validatedFields);
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: 'Missing Fields. Failed to Create Review Product.',
+    };
+  }
+
+  const { title, content, rating, userId, productId } = validatedFields.data;
+
+  const convertRating = parseInt(rating);
+  try {
+    await prisma.reviewHandcrafted.create({
+      data: {
+        title: title,
+        content: content,
+        rating: convertRating,
+        userId: userId,
+        productId: productId,
+      },
+    });
+  } catch (error) {
+    return { message: 'Database Error: Failed to Create Product.' };
+  }
+
+  revalidatePath(`/products/${formData.get('productId') as string}`);
+  redirect(`/products/${formData.get('productId') as string}`);
 }

@@ -16,7 +16,7 @@ export default function EditProductComponent({
         <h1 className="mb-4 text-2xl font-bold text-gray-800">
           Product Information
         </h1>
-        <form onSubmit={updateProductInfo} className="space-y-4">
+        <form action={updateProductInfo} className="space-y-4">
           <div className="flex flex-col">
             <label htmlFor="name" className="text-gray-700">
               Product Name
